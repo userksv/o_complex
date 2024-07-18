@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container">
-    <h1>Weather Application</h1>
+    <h2>Weather Application</h2>
     <form method="POST">
         {% csrf_token %}
         {{form|crispy}}
@@ -11,22 +11,45 @@
     </form>
 </div>
 <hr>
-<div class="container">
+<div class="container ">
+    <!--  -->
+    {% if current %}
+    <div class="row justify-content-center">
+        <h2 class="col-12 text-center">{{current.name}}</h2>
+    </div>
+    <div class="row justify-content-center">
+        <h3 class="col-12 text-center">{{current.main.temp|floatformat:"0" }} C°</h3>
+    </div>
+    <div class="row justify-content-center">
+        {% for w in current.weather %}
+        <p class="col-12 text-center mb-1">{{w.description}}</p>
+        {% endfor %}
+    </div>
+    <div class="row justify-content-center mt-1">
+        <small class="col-auto">Max: {{current.main.temp_max|floatformat:"0" }} C°</small>
+        <small class="col-auto">Min: {{current.main.temp_min|floatformat:"0" }} C°</small>
+    </div>
+    <hr />
+    {% endif %}
+    <!--  -->
+    <!--  -->
     {% if data %}
-    <form action="/add_location/" method="POST">
-        {% csrf_token %}
-        <h1>{{ data.city }}</h1>
-        <p>{{ data.temperature|floatformat:"0" }} C°</p>
-        <h3>{{ data.weather }}</h3>
-        <p><small>{{ data.description }}</small></p>
-        <img src="https://openweathermap.org/img/wn/{{ data.icon }}@2x.png" alt="img">
-        <p><small>{{ data.date_time }}</small></p>
-        <p>{{ data.lon }}</p>
-        <p>{{ data.lat }}</p>
-        <input type="text" name="city" value="{{ data.city }}" hidden>
-        <input type="text" name="lon" value="{{ data.lon }}" hidden>
-        <input type="text" name="lat" value="{{ data.lat }}" hidden>
-        {% endif %}
-    </form>
+    <div class="container">
+        <div class="row">
+            {% for day in data.list %}
+            <div class="col text-center">
+                <div>{{day.date_time|date}}</div>
+                <div>{{day.temp|floatformat:"0" }} C°</div>
+                <div>Max: {{day.temp_max|floatformat:"0" }} C°</div>
+                <div>Min: {{day.temp_min|floatformat:"0" }} C°</div>
+                <div>{{day.description}}</div>
+                <div>
+                    <img src="https://openweathermap.org/img/wn/{{ day.icon }}@2x.png" width="50" alt="img">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
