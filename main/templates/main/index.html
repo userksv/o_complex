@@ -1,0 +1,32 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <h1>Weather Application</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+<hr>
+<div class="container">
+    {% if data %}
+    <form action="/add_location/" method="POST">
+        {% csrf_token %}
+        <h1>{{ data.city }}</h1>
+        <p>{{ data.temperature|floatformat:"0" }} C°</p>
+        <h3>{{ data.weather }}</h3>
+        <p><small>{{ data.description }}</small></p>
+        <img src="https://openweathermap.org/img/wn/{{ data.icon }}@2x.png" alt="img">
+        <p><small>{{ data.date_time }}</small></p>
+        <p>{{ data.lon }}</p>
+        <p>{{ data.lat }}</p>
+        <input type="text" name="city" value="{{ data.city }}" hidden>
+        <input type="text" name="lon" value="{{ data.lon }}" hidden>
+        <input type="text" name="lat" value="{{ data.lat }}" hidden>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}
