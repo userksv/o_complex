@@ -7,8 +7,7 @@ WORKDIR /code
 
 RUN apt-get update && \
     apt-get install -y build-essential python3-dev && \
-    apt-get install -y --no-install-recommends gcc && \
-    apt-get install -y vim
+    apt-get install -y --no-install-recommends gcc
 
 COPY requirements.txt /code/
 COPY . /code/
