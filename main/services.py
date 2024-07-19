@@ -1,14 +1,11 @@
-
 from django.contrib.sessions.models import Session
 
-import os
-import requests
+import os, requests
 
 from .models import City, UserHistory
 
 from datetime import datetime
 from dotenv import load_dotenv
-
 
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
@@ -63,8 +60,6 @@ def track_city(city: str):
         obj.count += 1
     obj.save()
     return obj
-
-
 
 def create_session(request):
     '''Create session_key for each new user'''

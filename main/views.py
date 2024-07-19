@@ -15,7 +15,7 @@ def index(request):
     session_id = create_session(request)
     user_history = create_user_history(session_id)
     user_history = get_user_history(session_id)
-    cities = City.objects.all()
+    cities = City.objects.all() # for input autocomlete
     form = SearchForm()
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -33,7 +33,6 @@ def index(request):
                 'form': form,
                 'data': data,
                 'current': current_weather,
-                
             }
             return render(request, 'main/index.html', context)
     else:
@@ -45,6 +44,7 @@ def index(request):
         }
     return render(request, 'main/index.html', context)
 
+
 def history(request, city: str):
     '''Return context data by city'''
     current_weather = get_current_weather(city)
@@ -54,6 +54,7 @@ def history(request, city: str):
         'current': current_weather,
         }
     return render(request, 'main/history.html', context)
+
 
 def city_statistics(request):
     '''Return city statistics as a json'''

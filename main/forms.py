@@ -3,12 +3,13 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, ButtonHolder, Submit
 
+
 class SearchForm(forms.Form):
     city_name = forms.CharField(
         max_length=128, label='Enter city',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'e.g. New York',
+                'placeholder': 'e.g. Novosibirsk',
                 'class': 'form-control',
                 'list': 'cities'
             }

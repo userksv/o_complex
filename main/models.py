@@ -3,6 +3,7 @@ from django.contrib.sessions.models import Session
 
 
 class UserHistory(models.Model):
+    '''Model used for tracking anonyomuos users. Users identified by session_key'''
     session_id = models.ForeignKey(Session, on_delete=models.CASCADE)
     last_visit = models.DateTimeField(auto_now=True)
     last_city = models.CharField(max_length=100, blank=True, null=True)
@@ -29,10 +30,12 @@ class City(models.Model):
 
     class Meta:
         verbose_name_plural = "City"
+        ordering = ['name']
 
     def __str__(self) -> str:
         return f'{self.name} - {self.count}'
     
     @classmethod
     def get_data(self):
-        return City.objects.all()
+        '''Get only cities that were searched'''
+        return City.objects.filter(count__gt=0)
