@@ -8,6 +8,11 @@
             <form method="POST" class="form-inline">
                 {% csrf_token %}
                 {% crispy form %}
+                <datalist id="cities">
+                    {% for city in cities %}
+                    <option value="{{city.name}}"></option>
+                    {% endfor %}
+                </datalist>
             </form>
         </div>
     </div>

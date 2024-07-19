@@ -11,7 +11,7 @@ class UserHistory(models.Model):
         verbose_name_plural = "User's History"
 
     def __str__(self) -> str:
-        return f'{self.session_id.pk}'
+        return f'{self.session_id.pk} - {self.last_visit}'
     
     def get_last_visit(self):
         return self.last_visit
@@ -21,17 +21,17 @@ class UserHistory(models.Model):
     
     def update_last_city(self, city: str):
         self.last_city = city
-        
+
 
 class City(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    count = models.IntegerField(default=1)
+    count = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural = "City"
 
     def __str__(self) -> str:
-        return self.name
+        return f'{self.name} - {self.count}'
     
     @classmethod
     def get_data(self):
