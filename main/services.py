@@ -3,6 +3,7 @@ import requests
 from dotenv import load_dotenv
 from datetime import datetime
 import json
+from .models import City
 
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
@@ -13,8 +14,8 @@ def get_forecast_data(city: str):
     try:
         response = requests.get(url)
         response.raise_for_status()
-        data = response.json()
-        data = deserialize_forecast(response.json())
+        data = serialize_forecast(response.json())
+        track_city(city)
         return data
     except requests.exceptions.HTTPError as e:
         return e.response.status_code
@@ -30,8 +31,7 @@ def get_current_weather(city: str):
     except requests.exceptions.HTTPError as e:
         return e.response.status_code
 
-
-def deserialize_forecast(data: dict):
+def serialize_forecast(data: dict):
     records = {}
     records['city'] = data['city']['name']
     records['list'] = []
@@ -47,6 +47,11 @@ def deserialize_forecast(data: dict):
                 })
     return records
 
-import pprint
-
-pprint.pprint(get_current_weather('Seoul'))
+def track_city(city: str):
+    obj, created = City.objects.get_or_create(name=city)
+    if created:
+        obj.count = 1
+    else:
+        obj.count += 1
+    obj.save()
+    return obj
