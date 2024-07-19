@@ -10,10 +10,11 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends gcc
 
 COPY requirements.txt /code/
-COPY . /code/
 
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+COPY . /code/
 
 RUN python manage.py makemigrations
 RUN python manage.py migrate --no-input
