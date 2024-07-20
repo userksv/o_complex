@@ -53,6 +53,7 @@ def serialize_forecast(data: dict):
     return records
 
 def track_city(city: str):
+    '''Increments city count'''
     obj, created = City.objects.get_or_create(name=city)
     if created:
         obj.count = 1

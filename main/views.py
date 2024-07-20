@@ -12,10 +12,14 @@ from .services import (
 
 
 def index(request):
+    '''
+    Rendering index page with form for City
+    For each new user session created to track history
+    '''
     session_id = create_session(request)
     user_history = create_user_history(session_id)
     user_history = get_user_history(session_id)
-    cities = City.objects.all() # for input autocomlete
+    cities = City.objects.all() # for autocomlete in input
     form = SearchForm()
     if request.method == 'POST':
         form = SearchForm(request.POST)
