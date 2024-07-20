@@ -37,3 +37,8 @@
 
    По ссылке 'Your previous search' можно посмотреть погоду в городе, в котором пользователь уже смотрел ранее
    
+   Запуск тестов:
+    
+      docker ps
+      docker exec -it <IMAGE_ID> sh
+      python manage.py test
