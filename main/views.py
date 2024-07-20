@@ -60,3 +60,4 @@ def city_statistics(request):
     '''Return city statistics as a json'''
     data = serializers.serialize("json", City.get_data(), fields=["name", "count"])
     return HttpResponse(data, content_type="application/json")
+    
