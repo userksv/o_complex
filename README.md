@@ -40,5 +40,5 @@
    Запуск тестов:
     
       docker ps
-      docker exec -it <IMAGE_ID> sh
+      docker exec -it <CONTAINER_ID> sh
       python manage.py test
